@@ -1,1 +1,0 @@
-# GraficasComputacionles_2019
