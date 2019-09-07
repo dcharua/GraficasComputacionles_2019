@@ -535,6 +535,12 @@ function drawScutoid(gl, translation, rotationAxis) {
       0.0, 2.5, 0.0,
       0.5, 2.5, -0.8,
       1, 2.5, 0.3,
+
+        
+      // Top E
+      0.0, 2.5, 0.0,
+      1, 2.5, 0.3,
+      0, 2.5, 0.8,
     ];
   
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(verts), gl.STATIC_DRAW);
@@ -548,6 +554,7 @@ function drawScutoid(gl, translation, rotationAxis) {
       [1.0, 0.0, 0.0, 1], // Bottom C
       [1.0, 0.0, 0.0, 1], // Bottom D
       [1.0, 0.0, 0.0, 1], // Bottom E
+
       [0.0, 1.0, 0.0, 1], // Side A 1
       [0.0, 1.0, 0.0, 1], // Side A 2
       [0.0, 0.0, 1.0, 1], // Side B 1
@@ -558,10 +565,12 @@ function drawScutoid(gl, translation, rotationAxis) {
       [1.0, 1.0, 0.0, 1], // Side D 2
       [0.0, 1.0, 1.0, 1], // Side E 1 
       [0.0, 1.0, 1.0, 1], // Side E 2
+
       [0.0, 1.0, 0.0, 1], // Top A
       [0.0, 1.0, 0.0, 1], // Top B
       [0.0, 1.0, 0.0, 1], // Top C
       [0.0, 1.0, 0.0, 1], // Top D
+      [0.0, 1.0, 0.0, 1], // Top E
       [0.0, 1.0, 0.0, 1], // Top E
     ];
   
@@ -605,14 +614,15 @@ function drawScutoid(gl, translation, rotationAxis) {
       48, 49 ,50, //Top
       51, 52, 53, //Top
       54, 55, 56, //Top
-      57, 58, 59 //Top
+      57, 58, 59, //Top
+      60,61,62
     ];
   
     // gl.ELEMENT_ARRAY_BUFFER: Buffer used for element indices.
     // Uint16Array: Array of 16-bit unsigned integers.
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(piramidIndices), gl.STATIC_DRAW);
   
-    var piramid = {buffer: vertexBuffer,colorBuffer: colorBuffer,indices: piramidIndexBuffer,vertSize: 3,nVerts: 60,colorSize: 4,nColors: 60,nIndices: 60,primtype: gl.TRIANGLES,modelViewMatrix: mat4.create(),currentTime: Date.now()};
+    var piramid = {buffer: vertexBuffer,colorBuffer: colorBuffer,indices: piramidIndexBuffer,vertSize: 3,nVerts: 63,colorSize: 4,nColors: 63,nIndices: 63,primtype: gl.TRIANGLES,modelViewMatrix: mat4.create(),currentTime: Date.now()};
   
     mat4.translate(piramid.modelViewMatrix, piramid.modelViewMatrix, translation);
   
