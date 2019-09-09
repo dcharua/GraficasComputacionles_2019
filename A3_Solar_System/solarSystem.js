@@ -81,8 +81,8 @@ function createScene(canvas) {
 
   // Add  a camera so we can view the scene
   camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 4000);
-  camera.position.z = 50;
-  camera.position.y = 7;
+  camera.position.z = 100;
+  camera.position.y = 15;
   scene.add(camera);
 
   // Create a group to hold all the objects
@@ -144,7 +144,7 @@ function createScene(canvas) {
   solarGroup.position.set(0, 0, 0);
 
   // sun geometry
-  sun = new THREE.Mesh(new THREE.SphereGeometry(5, 20, 20), sunMaterial);
+  sun = new THREE.Mesh(new THREE.SphereGeometry(15, 20, 20), sunMaterial);
   sun.position.set(0, 0, 0);
   sun.rotation.x = Math.PI / 5;
   sun.rotation.y = Math.PI / 5;
@@ -152,33 +152,33 @@ function createScene(canvas) {
 
   //  Mercury geometry
   mercury = new THREE.Mesh(new THREE.SphereGeometry(0.4, 20, 20), mercuryMaterial);
-  mercury.position.set(6, 0, 0);
+  mercury.position.set(16, 0, 0);
   mercury.rotation.y = Math.PI / 5;
   mercury.rotation.x = Math.PI / 5;
   solarGroup.add(mercury);
 
   // Mercury Orbit
-  mercuryOrbit = new THREE.Mesh(new THREE.TorusGeometry(6, 0.05, 2, 50), OrbitsMaterial);
+  mercuryOrbit = new THREE.Mesh(new THREE.TorusGeometry(16, 0.05, 2, 50), OrbitsMaterial);
   mercuryOrbit.position.set(0, 0, 0);
   mercuryOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(mercuryOrbit);
 
   // Venus geometry
   venus = new THREE.Mesh(new THREE.SphereGeometry(1.3, 20, 20), venusMaterial);
-  venus.position.set(9, 0, 0);
+  venus.position.set(19, 0, 0);
   venus.rotation.y = Math.PI / 5;
   venus.rotation.x = Math.PI / 5;
   solarGroup.add(venus);
 
   // Venus Orbit
-  venusOrbit = new THREE.Mesh(new THREE.TorusGeometry(9, 0.05, 3, 50), OrbitsMaterial);
+  venusOrbit = new THREE.Mesh(new THREE.TorusGeometry(19, 0.05, 3, 50), OrbitsMaterial);
   venusOrbit.position.set(0, 0, 0);
   venusOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(venusOrbit);
 
   // Earth Group with moon and planet
   earthGroup = new THREE.Object3D;
-  earthGroup.position.set(14, 0, 0);
+  earthGroup.position.set(24, 0, 0);
   solarGroup.add(earthGroup);
 
   // Earth geometry
@@ -192,40 +192,40 @@ function createScene(canvas) {
   earth.add(moon);
 
   // Earth Orbit
-  earthOrbit = new THREE.Mesh(new THREE.TorusGeometry(14, 0.05, 3, 50), OrbitsMaterial);
+  earthOrbit = new THREE.Mesh(new THREE.TorusGeometry(24, 0.05, 3, 50), OrbitsMaterial);
   earthOrbit.position.set(0, 0, 0);
   earthOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(earthOrbit);
 
   // Mars geometry
   mars = new THREE.Mesh(new THREE.SphereGeometry(0.8, 20, 20), marsMaterial);
-  mars.position.set(18, 0, 0);
+  mars.position.set(28, 0, 0);
   mars.rotation.y = Math.PI / 5;
   mars.rotation.x = Math.PI / 5;
   solarGroup.add(mars);
 
   // Mars Orbit
-  marsOrbit = new THREE.Mesh(new THREE.TorusGeometry(18, 0.05, 3, 50), OrbitsMaterial);
+  marsOrbit = new THREE.Mesh(new THREE.TorusGeometry(28, 0.05, 3, 50), OrbitsMaterial);
   marsOrbit.position.set(0, 0, 0);
   marsOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(marsOrbit);
 
   // Jupiter geometry
   jupiter = new THREE.Mesh(new THREE.SphereGeometry(3.5, 20, 20), jupiterMaterial);
-  jupiter.position.set(24, 0, 0);
+  jupiter.position.set(34, 0, 0);
   jupiter.rotation.y = Math.PI / 5;
   jupiter.rotation.z = Math.PI / 5;
   solarGroup.add(jupiter);
 
   // Jupiter Orbit
-  jupiterOrbit = new THREE.Mesh(new THREE.TorusGeometry(24, 0.05, 3, 50), OrbitsMaterial);
+  jupiterOrbit = new THREE.Mesh(new THREE.TorusGeometry(34, 0.05, 3, 50), OrbitsMaterial);
   jupiterOrbit.position.set(0, 0, 0);
   jupiterOrbit.rotation.x = Math.PI / 2 ;
   solarGroup.add(jupiterOrbit);
 
   // Satrun Groupe with the planet and rings
   saturnGroup = new THREE.Object3D;
-  saturnGroup.position.set(35, 0, -6);
+  saturnGroup.position.set(45, 0, -6);
   solarGroup.add(saturnGroup);
 
   // Saturn geometry
@@ -241,46 +241,46 @@ function createScene(canvas) {
   saturn.add(saturnRings);
 
   // Saturn Orbit
-  saturnOrbit = new THREE.Mesh(new THREE.TorusGeometry(35, 0.05, 3, 50), OrbitsMaterial);
+  saturnOrbit = new THREE.Mesh(new THREE.TorusGeometry(45, 0.05, 3, 50), OrbitsMaterial);
   saturnOrbit.position.set(0, 0, 0);
   saturnOrbit.rotation.x= Math.PI / 2;
   solarGroup.add(saturnOrbit);
 
   // Uranus geometry
   uranus = new THREE.Mesh(new THREE.SphereGeometry(2.2, 20, 20), uranusMaterial);
-  uranus.position.set(46, 0, 0);
+  uranus.position.set(56, 0, 0);
   uranus.rotation.y = Math.PI / 5;
   uranus.rotation.x = Math.PI / 5;
   solarGroup.add(uranus);
 
   // Uranus Orbit
-  uranusOrbit = new THREE.Mesh(new THREE.TorusGeometry(46, 0.05, 3, 50), OrbitsMaterial);
+  uranusOrbit = new THREE.Mesh(new THREE.TorusGeometry(56, 0.05, 3, 50), OrbitsMaterial);
   uranusOrbit.position.set(0, 0, 0);
   uranusOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(uranusOrbit);
 
   // Neptune geometry
   neptune = new THREE.Mesh(new THREE.SphereGeometry(1.6, 20, 20), neptuneMaterial);
-  neptune.position.set(52, 0, 0);
+  neptune.position.set(62, 0, 0);
   neptune.rotation.y = -Math.PI / 5;
   neptune.rotation.x = -Math.PI / 5;
   solarGroup.add(neptune);
 
   // Neptune Orbit
-  neptuneOrbit = new THREE.Mesh(new THREE.TorusGeometry(52, 0.05, 3, 50), OrbitsMaterial);
+  neptuneOrbit = new THREE.Mesh(new THREE.TorusGeometry(62, 0.05, 3, 50), OrbitsMaterial);
   neptuneOrbit.position.set(0, 0, 0);
   neptuneOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(neptuneOrbit);
 
   // Pluto geometry
   pluto = new THREE.Mesh(new THREE.SphereGeometry(0.6, 20, 20), plutoMaterial);
-  pluto.position.set(56, 0, 0);
+  pluto.position.set(66, 0, 0);
   pluto.rotation.y = Math.PI / 5;
   pluto.rotation.x = Math.PI / 5;
   solarGroup.add(pluto);
 
   // Pluto Orbit
-  plutoOrbit = new THREE.Mesh(new THREE.TorusGeometry(56, 0.05, 3, 50), OrbitsMaterial);
+  plutoOrbit = new THREE.Mesh(new THREE.TorusGeometry(66, 0.05, 3, 50), OrbitsMaterial);
   plutoOrbit.position.set(0, 0, 0);
   plutoOrbit.rotation.x = Math.PI / 2;
   solarGroup.add(plutoOrbit);
