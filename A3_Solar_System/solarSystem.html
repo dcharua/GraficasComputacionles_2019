@@ -11,9 +11,10 @@
     <script src="libs/jquery-3.3.1/jquery-3.3.1.js"></script>
     <script src="libs/jquery-ui/jquery-ui.js"></script>
     <script src="libs/three.js/three.js"></script>
+    <script src="libs/three.js/controls/OrbitControls.js"></script>
 
     <script src="solarSystem.js"></script>
-    <script src="sceneHandlers.js"></script>
+    <!-- <script src="sceneHandlers.js"></script> -->
 
     <script type="text/javascript">
       $(document).ready(
@@ -24,8 +25,6 @@
           var canvas = document.getElementById("webglcanvas");
           // create the scene
           createScene(canvas);
-          // add mouse handling so we can rotate the scene
-          addMouseHandler(canvas);
           // Run the run loop
           run();
         });

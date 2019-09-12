@@ -31,6 +31,7 @@ var duration = 5000; // ms
 var currentTime = Date.now();
 
 function animate() {
+  controls.update();
   var now = Date.now();
   var deltat = now - currentTime;
   currentTime = now;
@@ -42,7 +43,7 @@ function animate() {
   sun.rotation.y += angle * 2;
   mercury.rotation.y += angle * 2;
   venus.rotation.y +=angle * 2;
-  earth.rotation.y -= angle * 2;
+  earth.rotation.y += angle;
   mars.rotation.y += angle * 2;
   jupiter.rotation.y += angle * 2;
   saturn.rotation.y += angle * 2;
@@ -83,6 +84,8 @@ function createScene(canvas) {
   camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 4000);
   camera.position.z = 100;
   camera.position.y = 15;
+  controls = new THREE.OrbitControls( camera, renderer.domElement );
+  controls.update();
   scene.add(camera);
 
   // Create a group to hold all the objects
@@ -287,4 +290,9 @@ function createScene(canvas) {
 
   // Add all the objects in teh group to the scene
   scene.add(solarGroup);
+}
+
+function scaleScene(scale){
+  solarGroup.scale.set(scale, scale, scale);
+  $("#scale").html("scale: " + scale);
 }
