@@ -15,3 +15,12 @@ Assignment No 3 for the computer graphics course. Using three.js, create a solar
 - The panning and rotation of the system has to be controlled using an orbit controller.
 
 **Deadline:** 19/09/12 23:59 hrs
+
+**Notas**
+
+- Faltaron las lunas... La luna de la tierra nada más la agregaste, pero no se mueve correctamente.
+- Faltó agregar los bump y normal maps.
+- Sobró la rotación del sol.
+- Faltó el anillo de urano. 
+
+**Calificación: 90**

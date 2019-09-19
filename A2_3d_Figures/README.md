@@ -22,3 +22,9 @@ Rubric:
 
 <img src="Images/Octahedron.jpg" width="300">
 <br/>Figure 3: 3D Octahedron.
+
+**Notas**
+
+- La geometría del escutoide está incorrecta.
+
+**Calificación: 95**
