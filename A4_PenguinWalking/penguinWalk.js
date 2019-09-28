@@ -28,7 +28,6 @@ if(!mtlLoader)
 
     mtlLoader.load('./Penguin_obj/penguin.obj', function(object){
         var texture = new THREE.TextureLoader().load('./Penguin_obj/peng_texture.jpg');
-        var eyeTexture = new THREE.TextureLoader().load('./Penguin_obj/peng_eye_texture.jpg');
         object.traverse( function ( child ) {
             if ( child instanceof THREE.Mesh ) {
                 child.castShadow = true;
@@ -39,7 +38,7 @@ if(!mtlLoader)
         object.scale.set(1,1,1);
         object.position.z = 0;
         object.position.x = 0;
-        object.rotation.y = 0;
+        object.rotation.y = -Math.PI/2;
         penguin.add(object)
         scene.add(penguin);
     },
@@ -56,14 +55,6 @@ if(!mtlLoader)
     });
 }
 
-function animate() {
-    controls.update();
-    var now = Date.now();
-    var deltat = now - currentTime;
-    currentTime = now;
-    var fract = deltat / duration;
-    var angle = Math.PI * 2 * fract;
-}
 
 function run() {
     requestAnimationFrame(function() { run(); });
@@ -74,8 +65,8 @@ function run() {
          // Update the animations
         KF.update();
 
-        // Spin the cube for next frame
-        animate();
+        // update controls
+        controls.update();
 
 }
 
@@ -182,149 +173,53 @@ function createScene(canvas) {
 }
 
 
-const path = [{
-    x: 0,
-    y: 0,
-    z: 0,
-  }, //  0
-  {
-    x: -2,
-    y: 0,
-    z: -1
-  }, //  1
-  {
-    x: -4,
-    y: 0,
-    z: -2
-  }, //  2
-  {
-    x: -6,
-    y: 0,
-    z: -1
-  }, //  3
-  {
-    x: -6.5,
-    y: 0,
-    z: 0
-  }, //  4
-  {
-    x: -6,
-    y: 0,
-    z: 1
-  }, //  5
-  {
-    x: -4,
-    y: 0,
-    z: 2
-  }, //  6
-  {
-    x: -2,
-    y: 0,
-    z: 1
-  }, //  7
-  {
-    x: 0,
-    y: 0,
-    z: 0
-  }, //  8
-  {
-    x: 2,
-    y: 0,
-    z: -1
-  }, //  9
-  {
-    x: 4,
-    y: 0,
-    z: -2
-  }, // 10
-  {
-    x: 6,
-    y: 0,
-    z: -1
-  }, // 11
-  {
-    x: 6.5,
-    y: 0,
-    z: 0
-  }, // 12
-  {
-    x: 6,
-    y: 0,
-    z: 1
-  }, // 13
-  {
-    x: 4,
-    y: 0,
-    z: 2
-  }, // 14
-  {
-    x: 2,
-    y: 0,
-    z: 1
-  } // 15
+const path = [
+  {x: 0, y: 0, z: 0,},
+  {x: -8,y: 0,z: -4}, 
+  {x: -16, y: 0, z: -8}, 
+  {x: -24, y: 0, z: -4}, 
+  {x: -26, y: 0, z: 0}, 
+  {x: -24, y: 0, z: 4}, 
+  {x: -18, y: 0, z: 8}, 
+  {x: -8, y: 0, z: 4}, 
+  {x: 0, y: 0, z: 0}, // midle point
+  {x: 8, y: 0, z: -4}, 
+  {x: 16, y: 0, z: -8}, 
+  {x: 24, y: 0, z: -4},
+  {x: 26, y: 0, z: 0},
+  {x: 24, y: 0, z: 4},
+  {x: 16, y: 0, z: 8},
+  {x: 8, y: 0, z: 4},
+  {x: 0, y: 0, z: 0}
 ];
 
-function setKeysTime(numeroSaltos) {
-    tiempoPorSalto = 1 / numeroSaltos;
-    tiempoMovimientoSalto = tiempoPorSalto / jumpMovement.length;
-    for (var i = 0; i < numeroSaltos; i++) {
-      for (var i2 = 0; i2 < jumpMovement.length; i2++) {
-        positionKeys.push((i * tiempoPorSalto) + (i2 * tiempoMovimientoSalto));
-      }
-      rotationKeys.push(i * tiempoPorSalto);
-    }
-  }
-  const jumpMovement = [0, .7, 1, .7, 0];
+angles = [
+  {x: 0, y: Math.PI/2, z: 0},
+  {x: 0, y: -Math.PI/2, z: 0}
+];
 
-  
-function setAllMovements() {
-  let x2, z2,
-    xFraction, zFraction;
-
-  path.forEach((jump, index) => {
-    if (index === path.length - 1) {
-      x2 = path[0].x;
-      z2 = path[0].z;
-    } else {
-      x2 = path[index + 1].x;
-      z2 = path[index + 1].z;
-    }
-
-    setAngles(jump.x, -jump.z, x2, -z2);
-    xFraction = (-jump.x + x2) / jumpMovement.length;
-    zFraction = (-jump.z + z2) / jumpMovement.length;
-    jumpMovement.forEach((jumpMove, index) => {
-        movements.push({
-          x: jump.x + (index * xFraction),
-          y: jumpMove,
-          z: jump.z + (index * zFraction)
-        })
-      });
-  });
+function getKeys(len){
+  return Array(len).fill().map((value, i) => i / (len- 1))
 }
 
-function setAngles(x1, z1, x2, z2) {
-  angles.push({
-    y: Math.atan2(-(z2 - z1), -(x2 - x1))
-  });
+function getAngles(len){
+  return  Array(len).fill().map((value, i) => {
+    return (i%2) ? {x: 0, y: Math.PI/6, z: 0} : {x: 0, y: -Math.PI/6, z: 0}
+  })
 }
-
-setKeysTime(path.length);
-setAllMovements();
-
 
 
 function playAnimations() {
   animation = new KF.KeyFrameAnimator;
   animation.init({
     interps: [{
-        keys: positionKeys,
-        values: movements,
+        keys: getKeys(path.length),
+        values: path,
         target: penguin.position
       },
       {
-        keys: rotationKeys,
-        values: angles,
+        keys: getKeys(path.length * 2),
+        values: getAngles(path.length * 2),
         target: penguin.rotation
       },
     ],
