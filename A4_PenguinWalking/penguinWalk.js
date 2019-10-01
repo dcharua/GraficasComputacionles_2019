@@ -1,8 +1,3 @@
-// 1. Enable shadow mapping in the renderer. 
-// 2. Enable shadows and set shadow parameters for the lights that cast shadows. 
-// Both the THREE.DirectionalLight type and the THREE.SpotLight type support shadows. 
-// 3. Indicate which geometry objects cast and receive shadows.
-
 var renderer = null, 
 scene = null, 
 camera = null,
@@ -11,14 +6,12 @@ penguin =  new THREE.Object3D;
 orbitControls = null;
 
 var mtlLoader = null;
-var duration = 20000; // ms
+var duration = 16000; // ms
 var currentTime = Date.now();
 
 // ANIMATION VARIABLES
 var animation = null,
-  positionKeys = [],
   movements = [],
-  rotationKeys = [],
   angles = [];
 
 
@@ -190,21 +183,68 @@ const path = [
   {x: 24, y: 0, z: 4},
   {x: 16, y: 0, z: 8},
   {x: 8, y: 0, z: 4},
-  {x: 0, y: 0, z: 0}
+  {x: 0, y: 0, z: 0} //16 steps
 ];
 
 angles = [
+  {x: 0, y: Math.PI/6, z: 0},
+  {x: 0, y: -Math.PI/6, z: 0}, //1
+
+  {x: 0, y: Math.PI/5, z: 0},
+  {x: 0, y: -  Math.PI/5, z: 0}, //2
+
+  {x: 0, y: Math.PI/4, z: 0},
+  {x: 0, y: 0, z: 0}, //3
+
   {x: 0, y: Math.PI/2, z: 0},
-  {x: 0, y: -Math.PI/2, z: 0}
+  {x: 0, y: Math.PI/3, z: 0}, //4
+
+  {x: 0, y: 3 * Math.PI/4, z: 0},
+  {x: 0, y: 7 * Math.PI / 12, z: 0}, //5
+
+  {x: 0, y: 11 * Math.PI / 12, z: 0},
+  {x: 0, y: 3 * Math.PI/ 4, z: 0}, //6
+
+  {x: 0, y:  13 * Math.PI / 12, z: 0},
+  {x: 0, y: 5 * Math.PI / 6, z: 0}, //7
+
+  {x: 0, y: 7 * Math.PI / 6, z: 0},
+  {x: 0, y: Math.PI , z: 0}, //8
+
+  {x: 0, y: 7 * Math.PI / 6, z: 0},
+  {x: 0, y: Math.PI , z: 0}, //9
+
+  {x: 0, y: 5 * Math.PI / 6, z: 0}, //10
+  {x: 0, y:  13 * Math.PI / 12, z: 0},
+  
+  {x: 0, y: 3 * Math.PI/ 4, z: 0}, //11
+  {x: 0, y: 11 * Math.PI / 12, z: 0},
+  
+  {x: 0, y: 7 * Math.PI / 12, z: 0}, //12
+  {x: 0, y: 3 * Math.PI/4, z: 0},
+  
+  {x: 0, y: Math.PI/3, z: 0}, //13
+  {x: 0, y: Math.PI/2, z: 0},
+  
+  {x: 0, y: Math.PI/4, z: 0},
+  {x: 0, y: 0, z: 0}, //14
+  
+  {x: 0, y: -  Math.PI/5, z: 0}, //15
+  {x: 0, y: Math.PI/5, z: 0},
+  
+  {x: 0, y: -Math.PI/6, z: 0}, //16
+  {x: 0, y: Math.PI/6, z: 0},
 ];
 
+// get the keys by the number of movments
 function getKeys(len){
   return Array(len).fill().map((value, i) => i / (len- 1))
 }
 
+// generate walking pattern
 function getAngles(len){
   return  Array(len).fill().map((value, i) => {
-    return (i%2) ? {x: 0, y: Math.PI/6, z: 0} : {x: 0, y: -Math.PI/6, z: 0}
+    return (i%2) ? {x: 0, y: Math.PI/8, z: 0} : {x: 0, y: -Math.PI/8, z: 0}
   })
 }
 
@@ -218,13 +258,13 @@ function playAnimations() {
         target: penguin.position
       },
       {
-        keys: getKeys(path.length * 2),
-        values: getAngles(path.length * 2),
+        keys: getKeys(angles.length),
+        values: angles,
         target: penguin.rotation
       },
     ],
     loop: true,
-    duration: 15000,
+    duration: duration,
   });
 
   animation.start();
