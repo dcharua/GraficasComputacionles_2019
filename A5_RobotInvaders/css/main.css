@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+* {
+  font-family: Arial;
+  font-size: 20px;
+  font-style: italic;
+  margin: 0;
+}
+
+body {
+  color: rgb(10, 0, 0);
+}
+
+#container {
+  position: absolute;
+  color: white;
+}
+
+.game-controls{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 16px;
+}
+
+
+
+#play {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#webglcanvas {
+  border: none;
+  background-color: #ffffff;
+}
