@@ -1,3 +1,5 @@
+//Daniel Charua A01017419
+
 // SCENE VARIABLES
 var renderer = null,
   scene = null,
@@ -10,8 +12,10 @@ var gameSettings = {
   playTime: 60,
   time: 0,
   score: 0,
+  highScore: 0,
   gameOver: false,
   difficulty: 5,
+  lives: 3,
   gameClock: null
 }
 
@@ -75,14 +79,26 @@ function clock() {
     document.getElementById("time").innerHTML = `Time:  ${(gameSettings.playTime - gameSettings.time).toString()} seconds`;
     gameSettings.time++;
     if (gameSettings.time === gameSettings.playTime) {
+      alert("Time is up")
       gameSettings.gameOver = true;
+      resetGame();
+      return;
     }
   }, 1000);
 }
 
 
 function resetGame() {
+  //save high score
+  if (gameSettings.score > gameSettings.highScore){
+    gameSettings.highScore = gameSettings.score;
+    window.localStorage.setItem('high_score', JSON.stringify(gameSettings.highScore));
+    document.getElementById("high_score").innerHTML = `High score: ${gameSettings.score.toString()}`;
+    alert("New high score!")
+  }
+
   gameSettings.score = 0;
+  gameSettings.lives = 3;
   gameSettings.time = 0;
   document.getElementById("play").value = "Play";
  
@@ -97,22 +113,21 @@ function startGame() {
   // remove robots from scene if any
   robotSettings.robots.forEach(robot => scene.remove(robot));
   robotSettings.robots = [];
+  // reset score time and lives in html
   document.getElementById("score").innerText = `Score: ${gameSettings.score.toString()}`;
   document.getElementById("time").innerText = `Time: ${gameSettings.playTime} seconds`;
+  document.getElementById("lives").innerHTML = 'Lives: ';
+  Array.from({length: gameSettings.lives}, () => document.getElementById("lives").innerHTML += ' &#9829;');
+  document.getElementById("play").innerText = "Restart";
+  // start game - clock and robot making
   gameSettings.gameOver = false;
   clock();
   makeRobots();
-  document.getElementById("play").innerText = "Restart";
 }
 
 // animation function to move robots foward
 function animate() {
   // if player lost
-  if (gameSettings.score < 0) {
-    gameSettings.gameOver = true;
-    resetGame();
-    return;
-  }
   if (!gameSettings.gameOver) {
     var now = Date.now();
     var deltat = now - currentTime;
@@ -122,14 +137,25 @@ function animate() {
     robotSettings.robots.forEach((robot, index) => {
       // update the mixer with the animation
       robot.mixer.update(deltat * robotSettings.walkingRobotAnimation);
-      // update the z position forward
-      robot.position.z += deltat * robotSettings.walkingRobotTranslation;
+      // update the z position forward if not dead
+      if (!robot.dead){
+        robot.position.z += deltat * robotSettings.walkingRobotTranslation;
+      } else {
+        robot.rotation.x += 0.05
+      }
       // Robot gets to the end line
       if (robot.position.z >= robotSettings.end) {
         scene.remove(robot);
         robotSettings.robots.splice(index, 1);
-        gameSettings.score -= 1;
-        document.getElementById("score").innerHTML = `Score: ${gameSettings.score.toString()}`;
+        gameSettings.lives -= 1;
+        document.getElementById("lives").innerHTML = 'Lives: ';
+        Array.from({length: gameSettings.lives}, () => document.getElementById("lives").innerHTML += ' &#9829;');
+        if (gameSettings.lives == 0) {
+          alert("You have lost")
+          gameSettings.gameOver = true;
+          resetGame();
+          return;
+        }
       }
     })
   }
@@ -172,8 +198,9 @@ function kill(event) {
       document.getElementById("score").innerHTML = `Score: ${gameSettings.score.toString()}`;
       obj.rotation.x = Math.PI/2
       obj.position.y = -0
-      robotSettings.robots.splice(robotSettings.robots.findIndex((robot) => robot.id == obj.id), 1);
+      obj.dead = true;
       window.setTimeout(()=>{
+        robotSettings.robots.splice(robotSettings.robots.findIndex((robot) => robot.id == obj.id), 1);
         scene.remove(obj);
       }, 1000)
     }
@@ -184,6 +211,11 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// function to change game difficulty
+function setDifficulty(){
+  gameSettings.difficulty = document.getElementById("difficulty").value;
 }
 
 function run() {
@@ -288,4 +320,12 @@ function createScene(canvas) {
   scene.add(root);
 
   window.addEventListener('mousedown', kill);
+
+  // get high score
+  let high_score = JSON.parse(window.localStorage.getItem('high_score'));
+  if (high_score) {
+    gameSettings.highScore = high_score;
+    document.getElementById("high_score").innerHTML = `High score: ${high_score.toString()}`;
+  }
+
 }

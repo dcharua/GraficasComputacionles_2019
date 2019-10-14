@@ -61,7 +61,13 @@
       <canvas id="webglcanvas"></canvas>
       <div class="game-controls">
         <div id="time">Time: 60 seconds</div>
+        <div id="lives">Lives:         &#9829;         &#9829;         &#9829;</div>
         <div id="score">Score: 0 </div>
+        <div id="high_score">High Score: 0 </div>
+        <div>
+          <label for="difficulty">Difficulty 1-10 </label>
+          <input id="difficulty" name="difficulty" onchange="setDifficulty()" type="number" max="10" min="1" step="1" value="5">
+        </div>
         <button id="play">Play</button>
       </div>
     </div>
