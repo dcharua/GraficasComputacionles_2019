@@ -35,19 +35,11 @@ var robotSettings = {
 }
 
 var duration = 20000, // ms
-  currentTime = Date.now(),
-  intervalCreateRobots = null,
-  intervalTimer = null;
+  currentTime = Date.now();
 
 var raycaster = new THREE.Raycaster(),
   mouse = new THREE.Vector2();
 
-
-
-function createDeadAnimation() {
-
-
-}
 
 function loadFBX() {
   var loader = new THREE.FBXLoader();
