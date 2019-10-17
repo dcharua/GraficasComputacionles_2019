@@ -190,8 +190,8 @@ function kill(event) {
   raycaster.setFromCamera(mouse, camera);
 
   var intersects = raycaster.intersectObjects(scene.children, true);
-
-  if (intersects.length > 1) {
+  // check if its a robot
+  if (intersects.length > 0 && intersects[0].object.name == "Robot1") {
     if (!gameSettings.gameOver) {
       var obj = intersects[0].object.parent;
       gameSettings.score++;
